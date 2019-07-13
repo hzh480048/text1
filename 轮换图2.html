@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>轮换图</title>
+	</head>
+	<style>
+		#dome{
+			position: absolute;
+			width: 590px;
+			height: 470px;
+			border: 1px solid #ccc;
+			overflow: hidden;
+			top: 20%;
+			left: 30%;
+			z-index: 1;
+		}
+		#box{
+			position: absolute;
+	
+		}
+		li{
+			list-style: none;
+			float: left;
+		}
+		.tip{
+			position: absolute;
+			left: 0;
+			top: 400px;
+		}
+		.tip a{
+			width: 15px;
+			height: 15px;
+			border: 1px solid red;
+			background: red;
+			float: left;
+			margin: 0 5px;
+			
+		    /* older safari/Chrome browsers */
+		    -webkit-opacity: 0.5;
+		    /* Netscape and Older than Firefox 0.9 */
+		    -moz-opacity: 0.5;
+		    /* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+		    -khtml-opacity: 0.5;
+		    /* IE9 + etc...modern browsers */
+		    opacity: .5;
+		    /* IE 4-9 */
+		    filter:alpha(opacity=50);
+		    /*This works in IE 8 & 9 too*/
+		    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+		    /*IE4-IE9*/
+		}
+		a:hover{
+			background: black;
+		}
+		.but{
+			position: relative;
+			left: 45%;
+			top: 100px;
+		}
+	</style>
+	<body>
+			<button id = 'pre' class="but">前一张</button>
+			<button id = 'next' class="but">后一张</button>
+		<div id="dome">
+			<div id="box">
+				<li><img src="//imgcps.jd.com/ling/7040368/5rW35Zuk5YWo55CD576O5aaG/5ruhMTk55YePMTAw/t-5bfe454a1e3348d2f8e16118/b3a458b1.jpg"></li>
+				<li><img src="//img1.360buyimg.com/pop/s590x470_jfs/t1/43766/9/4039/77567/5cd114adEf558d38f/d11d895406b12cdf.jpg!q90!cc_590x470.webp"></li>
+				<li><img src="//img1.360buyimg.com/da/s590x470_jfs/t1/62741/12/3018/98434/5d15630bE32b72ceb/0ee0e3ee19c1325a.jpg!q90!cc_590x470.webp"></li>
+				<li><img src="//img1.360buyimg.com/da/s590x470_jfs/t25135/60/1075238334/85761/42a7269e/5b86ea05Ne60a95e7.jpg!q90!cc_590x470.webp"></li>
+				<li><img src="//imgcps.jd.com/ling/7479547/6LaF5biC57K-6YCJ/54iG5qy-55u06ZmN/t-5bf3e1f5d45a9bab0fb69ff1/b0a18057.jpg"></li>
+				<li><img src="//img1.360buyimg.com/pop/s590x470_jfs/t1/35240/39/10540/65021/5ce60d09Edd89fd64/96391f735d5910ac.jpg!q90!cc_590x470.webp"></li>
+				<li><img src="//img1.360buyimg.com/pop/s590x470_jfs/t1/47378/7/3809/63470/5d19778eE81f7ffab/89e119394df00403.jpg!q90!cc_590x470.webp"></li>
+				<li><img src="//imgcps.jd.com/ling/45763076372/5a6255S15riF5YeJ5a2j/5pS-5Lu355yB6Jaq54eD5oOF5LiA5aSP/t-5bd95a11ba82b80306af614e/c275b46c.jpg"></li>
+				<li><img src="//imgcps.jd.com/ling/7040368/5rW35Zuk5YWo55CD576O5aaG/5ruhMTk55YePMTAw/t-5bfe454a1e3348d2f8e16118/b3a458b1.jpg"></li>
+				<li><img src="//img1.360buyimg.com/pop/s590x470_jfs/t1/43766/9/4039/77567/5cd114adEf558d38f/d11d895406b12cdf.jpg!q90!cc_590x470.webp"></li>
+			</div>
+			<div class="tip">
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+					<a href="javascript:;"></a>
+			</div>
+		</div>
+		<script>
+			 //获取所有的li数组
+			var listArrr=document.getElementsByTagName("li");
+			//获取box
+			var box =document.getElementById("box");
+			//获取第一个class=tip的div
+			var tip =document.getElementsByClassName("tip")[0];
+			//获取dome
+			var dome =document.getElementById("dome");
+			//导航点
+			var  abts=document.getElementsByTagName("a");
+			//前一张的button
+			var  pre = document.getElementById('pre');
+			//后一张的button
+			var  next = document.getElementById('next');
+			//设置box的宽度
+			box.style.width=listArrr.length*590+"px";
+			//是tip居中
+			tip.style.left=dome.clientWidth/2-tip.clientWidth/2+"px";
+			 //给lef负值
+			box.style.left=0+'px';
+			//取消定时器号
+			var timer=null;
+			//abts序号
+			var index=0;
+			//初始第一个bats为黑色
+			abts[0].style.background='black';
+			
+			box.style.left=-590+"px"; //初始位置让第一张被看到而不是第0张
+			
+			
+			
+			function autoChage(){//自动切换
+				timer = setInterval(function(){
+					next.onclick();
+				},3000);
+			}  
+			
+			autoChage();//启动自动切换
+			
+			function start(obj,attr,target,callback){ //切换效果
+				var current = parseInt(getStyle(box,'left'));//获取当前位子
+				var	speed = (target-current)/8;  //移动速度
+					clearInterval(obj.timer);//取消可能遗留的定时器
+				obj.timer = setInterval(function(){
+					var oldval = getStyle(box,'left');//获取当前位置
+					var newval = parseInt(oldval)+speed; //移动后的位置
+					
+					if(newval>target && speed>0 ||newval<target && speed<0){//判断左右移动是否超出，超出直接=与target
+						newval = target;
+					}
+					box.style.left = newval+"px";//修改位置
+					
+					if(target == newval){//达到目标停止定时器，又回调就调回调
+						clearInterval(obj.timer);
+						callback && callback();
+					}
+				},30);
+				
+			}
+			
+			function getStyle(obj,attr){//兼容，获取样式
+				if(window.getComputedStyle){
+					return getComputedStyle(obj,null)[attr];
+				}
+				else{
+					return obj.currentStyle[attr];
+				}
+			}
+			
+			function setA(){ 
+				for (var i = 0;i<abts.length;i++) {//导航点所有清除选中点
+					abts[i].style.background='';
+				}
+				if(index == 8){//此时是第9张图，也就是最后一张
+					index = 0;
+					box.style.left = -590*index+"px";//快速切换到第0张图
+				}
+				if(index == -1){//此时是第0张图
+					index=7;
+					box.style.left = (index+1)*-590+"px";//快速切换到第9张
+				}
+				abts[index].style.background='black';//选中的导航点标识
+			}
+			
+			pre.onclick = function(){//切换到前一张
+				index--;
+				scroll();
+			}
+			next.onclick = function(){//切换到后一张
+				index++;
+				scroll();
+			}
+			
+			for (var i = 0;i<abts.length;i++) {//绑定所有的导航点
+				abts[i].num = i;
+				abts[i].onclick = function(){
+					index = this.num;//将点击导航点的序号赋值给index切换
+					scroll();
+					
+				}
+				
+			}
+			
+			function scroll(){ //启动移动效果
+				clearInterval(timer);
+				start(box,'lef',-590*(index+1),function(){//传值的目标是-590*（index+1），因为我是从第一长开始的而不是第0张图片
+					setA();
+					autoChage();
+				})
+
+			}
+		</script>
+	</body>
+</html>
+
